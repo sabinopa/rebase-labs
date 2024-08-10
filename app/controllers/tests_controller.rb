@@ -1,5 +1,5 @@
 require 'sinatra'
-require_relative '../config/test_service'
+require_relative '../../config/test_service'
 
 get '/tests' do
   content_type :json

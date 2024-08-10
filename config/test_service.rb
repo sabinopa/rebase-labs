@@ -1,28 +1,27 @@
 require_relative 'database'
+require 'json'
 
 class TestService
   def self.parse_tests
-    sql_query = base_sql_query
+    sql_query = self.base_sql_query
     result = execute_query(sql_query)
 
-    formatted_results = format_result(result)
+    formatted_results = format_results(result)
     formatted_results.to_json
   end
 
   def self.parse_tests_by_token(token)
-    sql_query = base_sql_query + "WHERE e.result_token = $1"
+    sql_query = self.base_sql_query + " WHERE e.result_token = $1"
     result = execute_query(sql_query, [token])
 
-    return { error: 'Token inválido.'}.to_json if result.nil? || result.entries.empty?
+    return { error: 'Token inválido.' }.to_json if result.nil? || result.entries.empty?
 
     exam = format_result(result.entries.first)
     exam.to_json
   end
 
-  private
-
-  def base_sql_query
-    sql_query = <<-SQL
+  def self.base_sql_query
+    <<-SQL
       SELECT
         e.result_token AS result_token,
         e.result_date AS result_date,
@@ -70,17 +69,21 @@ class TestService
     result
   end
 
-  def self.format_result(results)
-    results.map { |entry| format_result(exam) }
+  def self.format_results(results)
+    results.map { |exam| format_result(exam) }
   end
 
   def self.format_result(entry)
+    tests = JSON.parse(entry['tests']).reject do |test|
+      test['type'].nil? || test['limits'].nil? || test['results'].nil?
+    end
+
     {
-      "result_token": exam['result_token'],
-      "result_date": exam['result_date'],
-      "patient": JSON.parse(exam['patient']),
-      "doctor": JSON.parse(exam['doctor']),
-      "tests": JSON.parse(exam['tests'])
+      "result_token": entry['result_token'],
+      "result_date": entry['result_date'],
+      "patient": JSON.parse(entry['patient']),
+      "doctor": JSON.parse(entry['doctor']),
+      "tests": tests
     }
   end
 end
