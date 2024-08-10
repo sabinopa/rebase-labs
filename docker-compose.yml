@@ -11,17 +11,21 @@ services:
       - db_data:/var/lib/postgresql/data
     networks:
       - backend
-
   api:
-    build: .
-    depends_on:
-      - db
+    image: ruby:latest
+    working_dir: /app
     environment:
-      DATABASE_URL: postgres://user:password@db:5432/medical_tests
+      - REDIS_URL=redis://redis:6379/0
+    volumes:
+      - ./back:/app
+      - bundle_data_back:/usr/local/bundle
+      - ./back/data:/app/data
     ports:
       - "3000:3000"
-    networks:
-      - backend
+    depends_on:
+      - db
+    command: bash -c 'gem install bundler && bundle install && ruby server.rb'
+    container_name: relabs-api
 
 volumes:
   db_data:
