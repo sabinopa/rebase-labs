@@ -2,9 +2,10 @@ require 'spec_helper'
 require_relative '../../config/test_service'
 
 RSpec.describe TestService do
-  describe '.base_sql_query' do
-    it 'returns the correct SQL query' do
-      expected_sql = <<-SQL
+  describe '.build_sql_query' do
+    it 'returns the correct SQL query without a token' do
+      generated_sql = TestService.send(:build_sql_query).gsub(/\s+/, ' ').strip
+      expected_sql = <<-SQL.gsub(/\s+/, ' ').strip
         SELECT
           e.result_token AS result_token,
           e.result_date AS result_date,
@@ -41,10 +42,10 @@ RSpec.describe TestService do
         GROUP BY
           e.id, p.id, d.id
         ORDER BY
-          e.id;
+          e.id
       SQL
 
-      expect(TestService.send(:base_sql_query).gsub(/\s+/, ' ').strip).to eq(expected_sql.gsub(/\s+/, ' ').strip)
+      expect(generated_sql).to eq(expected_sql)
     end
   end
 
