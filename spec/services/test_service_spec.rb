@@ -41,10 +41,13 @@ RSpec.describe TestService do
         GROUP BY
           e.id, p.id, d.id
         ORDER BY
-          e.id;
+          e.id
       SQL
 
-      expect(TestService.send(:base_sql_query).gsub(/\s+/, ' ').strip).to eq(expected_sql.gsub(/\s+/, ' ').strip)
+      generated_sql = TestService.send(:base_sql_query).gsub(/\s+/, ' ').strip
+      expected_sql_normalized = expected_sql.gsub(/\s+/, ' ').strip
+
+      expect(generated_sql).to eq(expected_sql_normalized)
     end
   end
 

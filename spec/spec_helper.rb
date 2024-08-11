@@ -2,6 +2,10 @@ require 'rack/test'
 require 'rspec'
 require 'sinatra'
 require File.expand_path '../../server.rb', __FILE__
+require 'simplecov'
+SimpleCov.start
+
+# Previous content of test helper now starts here
 
 ENV['RACK_ENV'] = 'test'
 
@@ -21,6 +25,12 @@ ENV['RACK_ENV'] = 'test'
 #
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
+  config.before(:each) do
+    conn = DatabaseConfig.connect
+    conn.exec("TRUNCATE TABLE patients, doctors, exams, tests RESTART IDENTITY CASCADE")
+    conn.close
+  end
+
   config.include Rack::Test::Methods
 
   def app
