@@ -20,6 +20,7 @@ module CSVImporter
         'state' => row['estado paciente']
       )
 
+
       doctor = Doctor.find_by_crm(row['crm médico'], row['crm médico estado']) || Doctor.create(
         'crm' => row['crm médico'],
         'crm_state' => row['crm médico estado'],
@@ -27,12 +28,14 @@ module CSVImporter
         'email' => row['email médico']
       )
 
+
       exam = Exam.find_by_result_token(row['token resultado exame']) || Exam.create(
         'result_token' => row['token resultado exame'],
         'result_date' => row['data exame'],
         'patient_id' => patient.id,
         'doctor_id' => doctor.id
       )
+
 
       Test.create(
         'exam_id' => exam.id,
@@ -43,5 +46,6 @@ module CSVImporter
     end
   end
 end
+
 
 CSVImporter.import

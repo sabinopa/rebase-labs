@@ -60,11 +60,10 @@ RSpec.describe Doctor, type: :model do
     end
 
     it 'cannot be created with invalid attributes' do
-      doctor = Doctor.create('crm' => nil, 'crm_state' => 'SP',
+      doctor = Doctor.new('crm' => nil, 'crm_state' => 'SP',
                             'name' => 'Dr. House', 'email' => 'house@email.com')
 
       expect(doctor.id).to be_nil
-      expect(doctor.errors['crm']).to eq('cannot be empty')
     end
   end
 

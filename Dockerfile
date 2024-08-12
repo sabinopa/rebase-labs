@@ -1,15 +1,13 @@
-FROM ruby:3.1
+FROM ruby:latest
 
 WORKDIR /app
 
-RUN apt-get update -y && apt-get install -y chromium-driver
+COPY backend/Gemfile backend/Gemfile.lock ./
 
-COPY Gemfile Gemfile.lock ./
-
-RUN bundle install
+RUN gem install bundler && bundle install
 
 COPY . .
 
 EXPOSE 3000
 
-
+CMD ["ruby", "server.rb"]

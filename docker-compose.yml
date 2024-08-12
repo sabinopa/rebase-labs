@@ -3,20 +3,23 @@ version: '3.8'
 services:
   db:
     image: postgres:13
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./backend/init.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
       POSTGRES_DB: medical_tests
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
-    volumes:
-      - db_data:/var/lib/postgresql/data
-      - ./backend/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - backend
 
   api:
-    image: ruby:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
     working_dir: /app
     environment:
+      - DATABASE_URL=postgres://user:password@db:5432/medical_tests
       - REDIS_URL=redis://redis:6379/0
     volumes:
       - ./backend:/app
@@ -25,17 +28,17 @@ services:
       - "3000:3000"
     depends_on:
       - db
-    command: bash -c 'gem install bundler && bundle install && ruby server.rb'
     container_name: relabs-api
     networks:
       - backend
 
   redis:
     image: redis
+    networks:
+      - backend
 
 volumes:
   db_data:
-  bundle_data_back:
 
 networks:
   backend:

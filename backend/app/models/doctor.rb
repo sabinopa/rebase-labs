@@ -19,18 +19,26 @@ class Doctor
     @errors.empty?
   end
 
-  def self.create(attributes, conn = nil)
-    doctor = new(attributes)
-    return doctor unless doctor.valid?
+  def self.create(attributes)
+    conn = DatabaseConfig.connect
 
-    conn ||= DatabaseConfig.connect
+    existing_doctor = find_by_crm(attributes['crm'], attributes['crm_state'])
+    return existing_doctor if existing_doctor
+
     result = conn.exec_params(
       'INSERT INTO doctors (crm, crm_state, name, email) VALUES ($1, $2, $3, $4) RETURNING *',
-      [attributes['crm'], attributes['crm_state'], attributes['name'], attributes['email']]
+      [
+        attributes['crm'],
+        attributes['crm_state'],
+        attributes['name'],
+        attributes['email']
+      ]
     )
-    conn.close if conn.nil?
+
+    conn.close
     new(result[0])
   end
+
 
   def self.find_by_crm(crm, crm_state, conn = nil)
     conn ||= DatabaseConfig.connect
