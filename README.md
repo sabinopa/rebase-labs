@@ -75,7 +75,7 @@ docker-compose build
 Para iniciar a aplicação, utilize o Docker Compose:
 
 ```
-docker-compose up
+docker-compose up --build -d
 ```
 O servidor estará rodando na porta 3000.
 Você pode acessar a aplicação via http://localhost:3000.
@@ -176,7 +176,7 @@ json
 Para importar os dados do arquivo data.csv para o banco de dados, execute o seguinte comando:
 
 ```
-docker-compose exec api ruby config/csv_importer.rb
+docker-compose exec api ruby helpers/csv_importer.rb
 ```
 Os dados serão importados para as tabelas correspondentes no PostgreSQL.
 

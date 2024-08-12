@@ -7,7 +7,7 @@ require_relative '../app/models/test'
 
 module CSVImporter
   def self.import
-    csv_file_path = '/data/data.csv'
+    csv_file_path = 'data/data.csv'
 
     CSV.foreach(csv_file_path, headers: true, col_sep: ';') do |row|
       patient = Patient.find_by_cpf(row['cpf']) || Patient.create(

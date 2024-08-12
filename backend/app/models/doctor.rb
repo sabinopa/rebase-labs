@@ -1,3 +1,5 @@
+require_relative '../../config/database'
+
 class Doctor
   attr_reader :id, :crm, :crm_state, :name, :email, :errors
 

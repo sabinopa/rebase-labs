@@ -1,3 +1,5 @@
+require_relative '../../config/database'
+
 class Test
   attr_reader :id, :exam_id, :type, :limits, :results, :errors
 
