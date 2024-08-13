@@ -3,11 +3,13 @@ FROM ruby:latest
 WORKDIR /app
 
 COPY backend/Gemfile backend/Gemfile.lock ./
-
 RUN gem install bundler && bundle install
 
-COPY . .
+COPY backend/ /app/backend/
 
-EXPOSE 3000
+COPY frontend/Gemfile frontend/Gemfile.lock ./
+RUN gem install bundler && bundle install
 
-CMD ["ruby", "server.rb"]
+COPY frontend/ /app/frontend/
+
+EXPOSE 3000 2000

@@ -1,6 +1,6 @@
 # 📋👩🏽‍⚕️ Projeto de Listagem de Exames Médicos
 
-![Static Badge](https://img.shields.io/badge/Ruby_3.3.0-CC342D?style=for-the-badge&logo=ruby&logoColor=white)
+![Static Badge](https://img.shields.io/badge/Ruby-CC342D?style=for-the-badge&logo=ruby&logoColor=white)
 ![Sinatra](https://img.shields.io/badge/Ruby%20Sinatra-000000.svg?style=for-the-badge&logo=Ruby-Sinatra&logoColor=white)
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
@@ -40,7 +40,6 @@ Certifique-se de ter os seguintes softwares instalados no seu ambiente de desenv
 
 - [Docker](https://www.docker.com/)
 - [Docker Compose](https://docs.docker.com/compose/)
-- [Ruby v3.3.0](https://www.ruby-lang.org/pt/)
 
 ## Gems Utilizadas
 
@@ -75,7 +74,7 @@ docker-compose build
 Para iniciar a aplicação, utilize o Docker Compose:
 
 ```
-docker-compose up --build -d
+docker compose up -d
 ```
 O servidor estará rodando na porta 3000.
 Você pode acessar a aplicação via http://localhost:3000.
@@ -85,7 +84,7 @@ Você pode acessar a aplicação via http://localhost:3000.
 Para importar os dados do arquivo data.csv para o banco de dados, execute o seguinte comando:
 
 ```
-docker-compose exec api ruby helpers/csv_importer.rb
+docker-compose exec api ruby /app/backend/helpers/csv_importer.rb
 ```
 Os dados serão importados para as tabelas correspondentes no PostgreSQL.
 
