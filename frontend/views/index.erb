@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Exames</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap">
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <div class="d-flex align-items-center">
+        <img src="/images/logo.png" width="45" height="45" class="me-2">
+        <a href="/" class="navbar-brand">EXAMES</a>
+      </div>
+      <form id="search-form" class="d-flex mx-auto">
+        <input class="form-control me-2" type="search" id="search-token" placeholder="Insira um token" aria-label="Search">
+        <button class="btn-custom" type="submit">Buscar</button>
+      </form>
+    </div>
+  </nav>
+
+  <div class="container mt-4">
+    <div id="search-result" class="mb-4"></div>
+
+    <div class="row justify-content-center">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-hover mb-0">
+                <thead>
+                  <tr class="d-flex justify-content-between">
+                    <th scope="col">Token</th>
+                    <th scope="col">Paciente</th>
+                    <th scope="col">Data</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @exams.each do |exam| %>
+                    <tr>
+                      <td colspan="3">
+                        <a href="/exams/<%= exam.result_token %>" class="text-decoration-none d-block text-muted">
+                          <div class="d-flex justify-content-between align-items-center">
+                            <span><%= exam.result_token %></span>
+                            <span><%= exam.patient.name %></span>
+                            <span><%= exam.result_date %></span>
+                          </div>
+                        </a>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center mt-3 gap-4">
+          <% if @current_page > 1 %>
+            <a class="btn-custom" href="/?page=<%= @current_page - 1 %>">
+              <i class="fas fa-arrow-left"></i>
+            </a>
+          <% end %>
+
+          <% if @current_page < @total_pages %>
+            <a class="btn-custom" href="/?page=<%= @current_page + 1 %>">
+              <i class="fas fa-arrow-right"></i>
+            </a>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('search-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const token = document.getElementById('search-token').value;
+      fetch(`/api/tests/${token}`)
+        .then(response => response.json())
+        .then(data => {
+          const searchResultDiv = document.getElementById('search-result');
+          if (data.error) {
+            searchResultDiv.innerHTML = `<p style="color:red;">${data.error}</p>`;
+          } else {
+            searchResultDiv.innerHTML = `
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Exame encontrado</h5>
+                  <hr>
+                  <p class="text-muted"><strong>Token:</strong> ${data.result_token}</p>
+                  <p class="text-muted"><strong>Data:</strong> ${data.result_date}</p>
+                  <p class="text-muted"><strong>Paciente:</strong> ${data.name}</p>
+                  <p class="text-muted"><strong>CPF do Paciente:</strong> ${data.cpf}</p>
+                  <p class="text-muted"><strong>Médico:</strong> ${data.doctor.name}</p>
+                  <p class="text-muted"><strong>CRM:</strong> ${data.doctor.crm}</p>
+                  <a href="/exams/${data.result_token}" class="btn-custom">Ver Detalhes</a>
+                </div>
+              </div>
+            `;
+          }
+        });
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+body {
+  background-color: #EEF2F5 !important;
+  font-family: 'Open Sans', sans-serif !important;;
+}
+
+nav {
+  background-color: #E5E9EC !important;
+}
+
+.navbar-brand {
+  font-family: 'Gowun Dodum', sans-serif;
+  font-size: 48px;
+  color: #6c757d;
+}
+
+
+.title {
+  color: #6994B5
+}
+
+.btn-custom {
+  background-color: #40C9AC;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+}
+
+.btn-custom:hover {
+  background-color: #36b89b;
+}
+
+.card-title {
+  font-size: 24px;
+}
+
