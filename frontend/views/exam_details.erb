@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Detalhes do Exame</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <div class="d-flex align-items-center">
+        <img src="/images/logo.png" width="45" height="45" class="me-2">
+        <a href="/" class="navbar-brand">EXAMES</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mt-4">
+    <div class="d-flex p-4">
+      <a href="/" class="btn-custom">
+        <i class="fas fa-arrow-left"></i> Voltar
+      </a>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-4 d-flex">
+        <div class="card mb-4 flex-grow-1">
+          <div class="card-body">
+            <h1 class="card-title">Detalhes do Exame</h1>
+            <hr>
+            <p class="text-muted"><strong>Token:</strong> <%= @exam.result_token %></p>
+            <p class="text-muted"><strong>Data:</strong> <%= @exam.result_date %></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 d-flex">
+        <div class="card mb-4 flex-grow-1">
+          <div class="card-body">
+            <h2 class="card-title">Paciente</h2>
+            <hr>
+            <p class="text-muted"><strong>CPF:</strong> <%= @exam.patient.cpf %></p>
+            <p class="text-muted"><strong>Nome:</strong> <%= @exam.patient.name %></p>
+            <p class="text-muted"><strong>Email:</strong> <%= @exam.patient.email %></p>
+            <p class="text-muted"><strong>Data de Nascimento:</strong> <%= @exam.patient.birthdate %></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 d-flex">
+        <div class="card mb-4 flex-grow-1">
+          <div class="card-body">
+            <h2 class="card-title">Médico</h2>
+            <hr>
+            <p class="text-muted"><strong>CRM:</strong> <%= @exam.doctor.crm %></p>
+            <p class="text-muted"><strong>Nome:</strong> <%= @exam.doctor.name %></p>
+            <p class="text-muted"><strong>Email:</strong> <%= @exam.doctor.email %></p>
+            <p class="text-muted"><strong>Estado do CRM:</strong> <%= @exam.doctor.crm_state %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title">Testes</h2>
+        <hr>
+        <div class="table-responsive">
+          <table class="table table-hover mb-0 w-100">
+            <thead>
+              <tr>
+                <th scope="col" class="text-muted">Tipo</th>
+                <th scope="col" class="text-muted">Limites</th>
+                <th scope="col" class="text-muted">Resultado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @exam.tests.each do |test| %>
+                <tr class="text-muted">
+                  <td><%= test.type %></td>
+                  <td><%= test.limits %></td>
+                  <td><%= test.results %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 # 📋👩🏽‍⚕️ Projeto de Listagem de Exames Médicos
 
-![Static Badge](https://img.shields.io/badge/Ruby_3.3.0-CC342D?style=for-the-badge&logo=ruby&logoColor=white)
+![Static Badge](https://img.shields.io/badge/Ruby-CC342D?style=for-the-badge&logo=ruby&logoColor=white)
 ![Sinatra](https://img.shields.io/badge/Ruby%20Sinatra-000000.svg?style=for-the-badge&logo=Ruby-Sinatra&logoColor=white)
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
@@ -40,7 +40,6 @@ Certifique-se de ter os seguintes softwares instalados no seu ambiente de desenv
 
 - [Docker](https://www.docker.com/)
 - [Docker Compose](https://docs.docker.com/compose/)
-- [Ruby v3.3.0](https://www.ruby-lang.org/pt/)
 
 ## Gems Utilizadas
 
@@ -63,13 +62,6 @@ git clone git@github.com:sabinopa/rebase-labs.git
 cd rebase-labs
 ```
 
-### Construir os Containers Docker
-Construa os containers Docker para a aplicação e o banco de dados:
-
-```
-docker-compose build
-```
-
 ## Executando a Aplicação
 ### Iniciar o Servidor
 Para iniciar a aplicação, utilize o Docker Compose:
@@ -77,15 +69,15 @@ Para iniciar a aplicação, utilize o Docker Compose:
 ```
 docker-compose up --build -d
 ```
-O servidor estará rodando na porta 3000.
-Você pode acessar a aplicação via http://localhost:3000.
+Você pode acessar a API através http://localhost:3000/tests.
+Você pode acessar a frontend através http://localhost:2000.
 
 ## Populando o Banco de Dados
 ### Executando a Importação de Dados CSV
 Para importar os dados do arquivo data.csv para o banco de dados, execute o seguinte comando:
 
 ```
-docker-compose exec api ruby helpers/csv_importer.rb
+docker-compose exec api ruby /app/backend/helpers/csv_importer.rb
 ```
 Os dados serão importados para as tabelas correspondentes no PostgreSQL.
 
@@ -182,10 +174,12 @@ json
 
 ## Testes
 ### Executando os Testes
-Os testes estão escritos utilizando RSpec. Para executar os testes, use o seguinte comando:
+Os testes estão escritos utilizando RSpec.
+Para executar os testes de backend, use o seguinte comando:
 
 ```
 docker-compose exec api rspec
+docker-compose exec front rspec
 ```
 
 

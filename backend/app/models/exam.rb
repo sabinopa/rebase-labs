@@ -1,3 +1,8 @@
+require_relative '../../config/database'
+require_relative 'patient'
+require_relative 'doctor'
+require_relative 'test'
+
 class Exam
   attr_reader :id, :result_token, :result_date, :patient_id, :doctor_id, :errors
 
@@ -37,11 +42,41 @@ class Exam
     result.any? ? new(result[0]) : nil
   end
 
+  def self.all
+    conn = DatabaseConfig.connect
+    result = conn.exec('SELECT * FROM exams')
+    conn.close
+    result.map { |exam_data| new(exam_data) }
+  end
+
   def tests
     conn = DatabaseConfig.connect
     result = conn.exec_params('SELECT * FROM tests WHERE exam_id = $1', [@id])
     conn.close
     result.map { |test_data| Test.new(test_data) }
+  end
+
+  def patient
+    @patient ||= Patient.find_by_id(@patient_id)
+  end
+
+  def doctor
+    @doctor ||= Doctor.find_by_id(@doctor_id)
+  end
+
+  def self.paginate(page:, per_page:)
+    offset = (page - 1) * per_page
+    conn = DatabaseConfig.connect
+    results = conn.exec_params("SELECT * FROM exams LIMIT $1 OFFSET $2", [per_page, offset])
+    conn.close
+    results.map { |row| new(row) }
+  end
+
+  def self.count
+    conn = DatabaseConfig.connect
+    result = conn.exec("SELECT COUNT(*) FROM exams")
+    conn.close
+    result[0]['count'].to_i
   end
 
   private

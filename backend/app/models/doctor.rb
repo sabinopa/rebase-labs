@@ -47,6 +47,13 @@ class Doctor
     result.any? ? new(result[0]) : nil
   end
 
+  def self.find_by_id(id)
+    conn = DatabaseConfig.connect
+    result = conn.exec_params('SELECT * FROM doctors WHERE id = $1 LIMIT 1', [id])
+    conn.close
+    result.any? ? new(result[0]) : nil
+  end
+
   private
 
   def validate_presence_of_attributes
