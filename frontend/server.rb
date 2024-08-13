@@ -5,10 +5,12 @@ require_relative '../backend/app/models/exam'
 set :bind, '0.0.0.0'
 set :port, 2000
 set :views, File.join(File.dirname(__FILE__), '../frontend/views')
+set :test_mode, false
 
 PER_PAGE = 10
 
 get '/' do
+  test_mode = settings.test_mode ? 'true' : 'false'
   page = (params[:page] || 1).to_i
 
   @exams = Exam.paginate(page: page, per_page: PER_PAGE)
@@ -16,6 +18,16 @@ get '/' do
   @total_pages = (Exam.count / PER_PAGE.to_f).ceil
 
   erb :index
+end
+
+get '/set-test-mode' do
+  settings.test_mode = true
+  "Test mode set"
+end
+
+get '/reset-test-mode' do
+  settings.test_mode = false
+  "Test mode reset"
 end
 
 get '/api/tests/:token' do

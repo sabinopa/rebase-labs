@@ -62,22 +62,15 @@ git clone git@github.com:sabinopa/rebase-labs.git
 cd rebase-labs
 ```
 
-### Construir os Containers Docker
-Construa os containers Docker para a aplicação e o banco de dados:
-
-```
-docker-compose build
-```
-
 ## Executando a Aplicação
 ### Iniciar o Servidor
 Para iniciar a aplicação, utilize o Docker Compose:
 
 ```
-docker compose up -d
+docker-compose up --build -d
 ```
-O servidor estará rodando na porta 3000.
-Você pode acessar a aplicação via http://localhost:3000.
+Você pode acessar a API através http://localhost:3000/tests.
+Você pode acessar a frontend através http://localhost:2000.
 
 ## Populando o Banco de Dados
 ### Executando a Importação de Dados CSV
@@ -181,10 +174,12 @@ json
 
 ## Testes
 ### Executando os Testes
-Os testes estão escritos utilizando RSpec. Para executar os testes, use o seguinte comando:
+Os testes estão escritos utilizando RSpec.
+Para executar os testes de backend, use o seguinte comando:
 
 ```
 docker-compose exec api rspec
+docker-compose exec front rspec
 ```
 
 

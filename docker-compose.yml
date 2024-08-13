@@ -17,6 +17,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - APP_ENV=backend
     working_dir: /app/backend
     environment:
       - DATABASE_URL=postgres://user:password@db:5432/medical_tests
@@ -31,13 +33,15 @@ services:
     container_name: relabs-api
     networks:
       - backend
-    command: bash -c "cd /app/backend && ruby server.rb"
+    command: bash -c "bundle install && ruby server.rb"
 
   front:
     build:
       context: .
       dockerfile: Dockerfile
-    working_dir: /app
+      args:
+        - APP_ENV=frontend
+    working_dir: /app/frontend
     environment:
       - API_URL=http://backend:3000
     volumes:
@@ -47,7 +51,7 @@ services:
     networks:
       - backend
     container_name: relabs-front
-    command: bash -c "cd /app/frontend && ruby server.rb"
+    command: bash -c "bundle install && ruby server.rb"
 
   redis:
     image: redis

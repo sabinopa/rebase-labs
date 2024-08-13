@@ -88,17 +88,19 @@
             searchResultDiv.innerHTML = `<p style="color:red;">${data.error}</p>`;
           } else {
             searchResultDiv.innerHTML = `
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Exame encontrado</h5>
-                  <hr>
-                  <p class="text-muted"><strong>Token:</strong> ${data.result_token}</p>
-                  <p class="text-muted"><strong>Data:</strong> ${data.result_date}</p>
-                  <p class="text-muted"><strong>Paciente:</strong> ${data.name}</p>
-                  <p class="text-muted"><strong>CPF do Paciente:</strong> ${data.cpf}</p>
-                  <p class="text-muted"><strong>Médico:</strong> ${data.doctor.name}</p>
-                  <p class="text-muted"><strong>CRM:</strong> ${data.doctor.crm}</p>
-                  <a href="/exams/${data.result_token}" class="btn-custom">Ver Detalhes</a>
+              <div class="d-flex justify-content-center">
+                <div class="card" style="width: 50%; min-width: 300px;">
+                  <div class="card-body">
+                    <h5 class="card-title">Exame encontrado</h5>
+                    <hr>
+                    <p class="text-muted"><strong>Token:</strong> ${data.result_token}</p>
+                    <p class="text-muted"><strong>Data:</strong> ${data.result_date}</p>
+                    <p class="text-muted"><strong>Paciente:</strong> ${data.name}</p>
+                    <p class="text-muted"><strong>CPF do Paciente:</strong> ${data.cpf}</p>
+                    <p class="text-muted"><strong>Médico:</strong> ${data.doctor.name}</p>
+                    <p class="text-muted"><strong>CRM:</strong> ${data.doctor.crm}</p>
+                    <a href="/exams/${data.result_token}" class="btn-custom">Ver Detalhes</a>
+                  </div>
                 </div>
               </div>
             `;
