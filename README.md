@@ -95,37 +95,6 @@ Para parar a aplicação:
 docker-compose down
 ```
 
-### Estrutura do Projeto
-Aqui está uma visão geral da estrutura do projeto:
-
-```
-.
-├── app/
-│   ├── controllers/
-│   │   └── tests_controller.rb
-│   ├── models/
-│   │   ├── doctor.rb
-│   │   ├── exam.rb
-│   │   ├── patient.rb
-│   │   └── test.rb
-├── config/
-│   ├── database.rb
-│   ├── test_service.rb
-│   └── config.yml
-├── data/
-│   └── data.csv
-├── spec/
-│   ├── models/
-│   │   ├── doctor_spec.rb
-│   │   ├── exam_spec.rb
-│   │   ├── patient_spec.rb
-│   │   └── test_spec.rb
-├── Dockerfile
-├── docker-compose.yml
-├── Gemfile
-└── Gemfile.lock
-```
-
 ## Endpoints Disponíveis
 ```
 GET /tests
