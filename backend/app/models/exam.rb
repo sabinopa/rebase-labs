@@ -64,14 +64,6 @@ class Exam
     @doctor ||= Doctor.find_by_id(@doctor_id)
   end
 
-  def self.paginate(page:, per_page:)
-    offset = (page - 1) * per_page
-    conn = DatabaseConfig.connect
-    results = conn.exec_params("SELECT * FROM exams LIMIT $1 OFFSET $2", [per_page, offset])
-    conn.close
-    results.map { |row| new(row) }
-  end
-
   def self.count
     conn = DatabaseConfig.connect
     result = conn.exec("SELECT COUNT(*) FROM exams")

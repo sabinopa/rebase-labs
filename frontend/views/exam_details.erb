@@ -31,8 +31,8 @@
           <div class="card-body">
             <h1 class="card-title">Detalhes do Exame</h1>
             <hr>
-            <p class="text-muted"><strong>Token:</strong> <%= @exam.result_token %></p>
-            <p class="text-muted"><strong>Data:</strong> <%= @exam.result_date %></p>
+            <p class="text-muted"><strong>Token:</strong> <%= @exam['result_token'] %></p>
+            <p class="text-muted"><strong>Data:</strong> <%= @exam['result_date'] %></p>
           </div>
         </div>
       </div>
@@ -41,10 +41,10 @@
           <div class="card-body">
             <h2 class="card-title">Paciente</h2>
             <hr>
-            <p class="text-muted"><strong>CPF:</strong> <%= @exam.patient.cpf %></p>
-            <p class="text-muted"><strong>Nome:</strong> <%= @exam.patient.name %></p>
-            <p class="text-muted"><strong>Email:</strong> <%= @exam.patient.email %></p>
-            <p class="text-muted"><strong>Data de Nascimento:</strong> <%= @exam.patient.birthdate %></p>
+            <p class="text-muted"><strong>CPF:</strong> <%= @exam['patient']['cpf'] %></p>
+            <p class="text-muted"><strong>Nome:</strong> <%= @exam['patient']['name'] %></p>
+            <p class="text-muted"><strong>Email:</strong> <%= @exam['patient']['email'] %></p>
+            <p class="text-muted"><strong>Data de Nascimento:</strong> <%= @exam['patient']['birthdate'] %></p>
           </div>
         </div>
       </div>
@@ -53,10 +53,10 @@
           <div class="card-body">
             <h2 class="card-title">Médico</h2>
             <hr>
-            <p class="text-muted"><strong>CRM:</strong> <%= @exam.doctor.crm %></p>
-            <p class="text-muted"><strong>Nome:</strong> <%= @exam.doctor.name %></p>
-            <p class="text-muted"><strong>Email:</strong> <%= @exam.doctor.email %></p>
-            <p class="text-muted"><strong>Estado do CRM:</strong> <%= @exam.doctor.crm_state %></p>
+            <p class="text-muted"><strong>CRM:</strong> <%= @exam['doctor']['crm'] %></p>
+            <p class="text-muted"><strong>Nome:</strong> <%= @exam['doctor']['name'] %></p>
+            <p class="text-muted"><strong>Email:</strong> <%= @exam['doctor']['email'] %></p>
+            <p class="text-muted"><strong>Estado do CRM:</strong> <%= @exam['doctor']['crm_state'] %></p>
           </div>
         </div>
       </div>
@@ -75,11 +75,11 @@
               </tr>
             </thead>
             <tbody>
-              <% @exam.tests.each do |test| %>
+              <% @exam['tests'].each do |test| %>
                 <tr class="text-muted">
-                  <td><%= test.type %></td>
-                  <td><%= test.limits %></td>
-                  <td><%= test.results %></td>
+                  <td><%= test['type'] %></td>
+                  <td><%= test['limits'] %></td>
+                  <td><%= test['results'] %></td>
                 </tr>
               <% end %>
             </tbody>

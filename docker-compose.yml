@@ -48,6 +48,8 @@ services:
       - ./frontend:/app/frontend
     ports:
       - "2000:2000"
+    depends_on:
+      - api
     networks:
       - backend
     container_name: relabs-front
